@@ -20,6 +20,12 @@ else
     exit 1
 fi
 
+# Vérifier si le fichier PLIST des apps autorisées existe
+if [ ! -f "$APPS_PLIST" ]; then
+    echo "Erreur : Fichier des apps autorisées $APPS_PLIST introuvable" >&2
+    exit 1
+fi
+
 # Utiliser la variable system_apps chargée depuis jamf.conf
 # (La liste des applications toujours autorisées est maintenant dans jamf.conf)
 
