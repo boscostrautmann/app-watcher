@@ -35,9 +35,12 @@ cp config/jamf.conf /etc/
 chmod 600 /etc/jamf.conf
 chown root:admin /etc/jamf.conf
 
-cp config/apps.plist /etc/
-chmod 644 /etc/apps.plist
-chown root:admin /etc/apps.plist
+# Copier la liste des apps autorisé (Si fourni, requis mais configurable via JAMF Configuration Profiles)
+if [ -f "config/apps.plist" ]; then
+    cp config/apps.plist /etc/
+    chmod 644 /etc/apps.plist
+    chown root:admin /etc/apps.plist
+fi
 
 # Créer le fichier de log
 touch /var/log/app_watcher.log
