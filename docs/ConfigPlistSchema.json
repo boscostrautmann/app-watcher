@@ -1,0 +1,71 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "App-Watcher - Unified Configuration Schema",
+  "description": "Schéma pour configurer les applications autorisées et les paramètres de App-Watcher",
+  "type": "object",
+  "properties": {
+    "appConfiguration": {
+      "title": "Application Configuration",
+      "description": "Liste des applications autorisées par groupe",
+      "type": "array",
+      "property_order": 10,
+      "items": {
+        "title": "Group",
+        "type": "object",
+        "properties": {
+          "groupName": {
+            "title": "Group Name",
+            "description": "Nom du groupe d'utilisateurs",
+            "type": "string"
+          },
+          "allowedApps": {
+            "title": "Allowed Applications",
+            "description": "Liste des applications autorisées pour ce groupe",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "BundleID d'une application",
+              "pattern": "^[a-zA-Z0-9.]+$",
+              "title": "App"
+            }
+          }
+        }
+      }
+    },
+    "jamfSettings": {
+      "title": "JAMF Settings",
+      "description": "Paramètres de connexion à JAMF",
+      "type": "object",
+      "property_order": 20,
+      "properties": {
+        "serverURL": {
+          "title": "JAMF Server URL",
+          "description": "Adresse du serveur JAMF",
+          "type": "string",
+          "format": "uri"
+        },
+        "apiKey": {
+          "title": "API Key",
+          "description": "Clé API pour l'authentification",
+          "type": "string"
+        },
+        "deploymentTimeout": {
+          "title": "Deployment Timeout",
+          "description": "Délai maximal pour le déploiement (en secondes)",
+          "type": "integer",
+          "minimum": 1
+        },
+        "debug": {
+          "title": "Enable Debug mode",
+          "description": "Niveau de logs pour le mode débogage",
+          "type": "string",
+          "options": {
+            "enum_titles": ["FALSE", "INFO", "ERROR", "DEBUG"]
+          },
+          "enum": ["FALSE", "INFO", "ERROR", "DEBUG"]
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}
