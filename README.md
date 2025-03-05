@@ -10,4 +10,4 @@ App Watcher est un script Bash pour surveiller et gérer les applications sur ma
 
 1. Clonez le dépôt :
    ```bash
-   git clone https://github.com/votrecompte/app-watcher.git
+   git clone https://github.com/topbosco/app-watcher.git
