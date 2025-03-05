@@ -1,71 +1,360 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "App-Watcher - Unified Configuration Schema",
-  "description": "Schéma pour configurer les applications autorisées et les paramètres de App-Watcher",
+  "description": "Schéma pour configurer les paramètres de App-Watcher et les applications autorisées",
   "type": "object",
   "properties": {
-    "appConfiguration": {
-      "title": "Application Configuration",
-      "description": "Liste des applications autorisées par groupe",
-      "type": "array",
-      "property_order": 10,
-      "items": {
-        "title": "Group",
-        "type": "object",
-        "properties": {
-          "groupName": {
-            "title": "Group Name",
-            "description": "Nom du groupe d'utilisateurs",
-            "type": "string"
-          },
-          "allowedApps": {
-            "title": "Allowed Applications",
-            "description": "Liste des applications autorisées pour ce groupe",
-            "type": "array",
-            "items": {
-              "type": "string",
-              "description": "BundleID d'une application",
-              "pattern": "^[a-zA-Z0-9.]+$",
-              "title": "App"
-            }
-          }
-        }
-      }
-    },
     "jamfSettings": {
       "title": "JAMF Settings",
       "description": "Paramètres de connexion à JAMF",
       "type": "object",
-      "property_order": 20,
       "properties": {
-        "serverURL": {
+        "JAMF_URL": {
           "title": "JAMF Server URL",
           "description": "Adresse du serveur JAMF",
           "type": "string",
-          "format": "uri"
+          "format": "uri",
+          "default": "https://votreinstance.jamfcloud.com"
         },
-        "apiKey": {
-          "title": "API Key",
-          "description": "Clé API pour l'authentification",
-          "type": "string"
+        "JAMF_CLIENT_ID": {
+          "title": "JAMF Client ID",
+          "description": "Identifiant client pour l'authentification OAuth",
+          "type": "string",
+          "default": "votre_client_id"
         },
-        "deploymentTimeout": {
-          "title": "Deployment Timeout",
-          "description": "Délai maximal pour le déploiement (en secondes)",
-          "type": "integer",
-          "minimum": 1
-        },
+        "JAMF_CLIENT_SECRET": {
+          "title": "JAMF Client Secret",
+          "description": "Secret client pour l'authentification OAuth",
+          "type": "string",
+          "default": "votre_client_secret"
+        }
+      },
+      "required": ["JAMF_URL", "JAMF_CLIENT_ID", "JAMF_CLIENT_SECRET"]
+    },
+    "generalSettings": {
+      "title": "General Settings",
+      "description": "Paramètres de configuration générale",
+      "type": "object",
+      "properties": {
         "debug": {
-          "title": "Enable Debug mode",
+          "title": "Debug Mode",
           "description": "Niveau de logs pour le mode débogage",
           "type": "string",
-          "options": {
-            "enum_titles": ["FALSE", "INFO", "ERROR", "DEBUG"]
-          },
-          "enum": ["FALSE", "INFO", "ERROR", "DEBUG"]
+          "enum": ["FALSE", "INFO", "ERROR", "DEBUG"],
+          "default": "FALSE"
+        },
+        "StartInterval": {
+          "title": "Start Interval",
+          "description": "Intervalle en secondes pour l'exécution du script",
+          "type": "integer",
+          "minimum": 1,
+          "default": 60
+        },
+        "StandardOutPath": {
+          "title": "Standard Output Path",
+          "description": "Chemin pour les sorties standard",
+          "type": "string",
+          "default": "/var/log/app_watcher.log"
+        },
+        "StandardErrorPath": {
+          "title": "Standard Error Path",
+          "description": "Chemin pour les erreurs",
+          "type": "string",
+          "default": "/var/log/app_watcher.log"
+        },
+        "company": {
+          "title": "Company Name",
+          "description": "Nom de l'entreprise pour personnalisation",
+          "type": "string",
+          "default": "example"
+        },
+        "appsPlistPath": {
+          "title": "Apps Plist Path",
+          "description": "Chemin du fichier apps.plist",
+          "type": "string",
+          "default": "/etc/apps.plist"
         }
+      },
+      "required": ["debug", "StartInterval", "StandardOutPath", "StandardErrorPath", "company", "appsPlistPath"]
+    },
+    "systemApps": {
+      "title": "System Apps",
+      "description": "Liste des applications toujours autorisées (système ou Jamf)",
+      "type": "object",
+      "properties": {
+        "Finder": {
+          "type": "string",
+          "default": "com.apple.finder"
+        },
+        "UnmountAssistantAgent": {
+          "type": "string",
+          "default": "com.apple.UnmountAssistantAgent"
+        },
+        "nbagent": {
+          "type": "string",
+          "default": "com.apple.nbagent"
+        },
+        "jamfHelper": {
+          "type": "string",
+          "default": "com.jamfsoftware.jamfHelper"
+        },
+        "CompanyPortalMac_ssoextension": {
+          "type": "string",
+          "default": "com.microsoft.CompanyPortalMac.ssoextension"
+        },
+        "SecurityAgent": {
+          "type": "string",
+          "default": "com.apple.SecurityAgent"
+        },
+        "studentd": {
+          "type": "string",
+          "default": "com.apple.studentd"
+        },
+        "jamf_trust": {
+          "type": "string",
+          "default": "com.jamf.trust"
+        },
+        "Chrome_helper_plugin": {
+          "type": "string",
+          "default": "com.google.Chrome.helper.plugin"
+        },
+        "Chrome_helper": {
+          "type": "string",
+          "default": "com.google.Chrome.helper"
+        },
+        "AccessibilityVisualsAgent": {
+          "type": "string",
+          "default": "com.apple.AccessibilityVisualsAgent"
+        },
+        "WebKit_WebContent": {
+          "type": "string",
+          "default": "com.apple.WebKit.WebContent"
+        },
+        "WebKit_Networking": {
+          "type": "string",
+          "default": "com.apple.WebKit.Networking"
+        },
+        "dock_helper": {
+          "type": "string",
+          "default": "com.apple.dock.helper"
+        },
+        "quicklook_ui_helper": {
+          "type": "string",
+          "default": "com.apple.quicklook.ui.helper"
+        },
+        "OSDUIHelper": {
+          "type": "string",
+          "default": "com.apple.OSDUIHelper"
+        },
+        "appkit_xpc_openAndSavePanelService": {
+          "type": "string",
+          "default": "com.apple.appkit.xpc.openAndSavePanelService"
+        },
+        "jamf_remoteassist_connectorui": {
+          "type": "string",
+          "default": "com.jamf.remoteassist.connectorui"
+        },
+        "dock": {
+          "type": "string",
+          "default": "com.apple.dock"
+        },
+        "wifi_WiFiAgent": {
+          "type": "string",
+          "default": "com.apple.wifi.WiFiAgent"
+        },
+        "jamf_connect": {
+          "type": "string",
+          "default": "com.jamf.connect"
+        },
+        "jamf_protect_agent": {
+          "type": "string",
+          "default": "com.jamf.protect.agent"
+        },
+        "wallpaper_agent": {
+          "type": "string",
+          "default": "com.apple.wallpaper.agent"
+        },
+        "dock_extra": {
+          "type": "string",
+          "default": "com.apple.dock.extra"
+        },
+        "dock_external_extra_arm64": {
+          "type": "string",
+          "default": "com.apple.dock.external.extra.arm64"
+        },
+        "Spotlight": {
+          "type": "string",
+          "default": "com.apple.Spotlight"
+        },
+        "WebKit_GPU": {
+          "type": "string",
+          "default": "com.apple.WebKit.GPU"
+        },
+        "loginwindow": {
+          "type": "string",
+          "default": "com.apple.loginwindow"
+        },
+        "systemuiserver": {
+          "type": "string",
+          "default": "com.apple.systemuiserver"
+        },
+        "controlcenter": {
+          "type": "string",
+          "default": "com.apple.controlcenter"
+        },
+        "notificationcenter": {
+          "type": "string",
+          "default": "com.apple.notificationcenter"
+        },
+        "uikitsystem": {
+          "type": "string",
+          "default": "com.apple.uikitsystem"
+        },
+        "Terminal": {
+          "type": "string",
+          "default": "com.apple.Terminal"
+        },
+        "CoreLocationAgent": {
+          "type": "string",
+          "default": "com.apple.CoreLocationAgent"
+        },
+        "AirPlayUIAgent": {
+          "type": "string",
+          "default": "com.apple.AirPlayUIAgent"
+        },
+        "AppSSOAgent": {
+          "type": "string",
+          "default": "com.apple.AppSSOAgent"
+        },
+        "backgroundtaskmanagement_agent": {
+          "type": "string",
+          "default": "com.apple.backgroundtaskmanagement.agent"
+        },
+        "ReportCrash": {
+          "type": "string",
+          "default": "com.apple.ReportCrash"
+        },
+        "Safari_SafeBrowsing_Service": {
+          "type": "string",
+          "default": "com.apple.Safari.SafeBrowsing.Service"
+        },
+        "SafariBookmarksSyncAgent": {
+          "type": "string",
+          "default": "com.apple.SafariBookmarksSyncAgent"
+        },
+        "sharingd": {
+          "type": "string",
+          "default": "com.apple.sharingd"
+        },
+        "tccd": {
+          "type": "string",
+          "default": "com.apple.tccd"
+        },
+        "TextInputMenuAgent": {
+          "type": "string",
+          "default": "com.apple.TextInputMenuAgent"
+        },
+        "UserNotificationCenterAgent": {
+          "type": "string",
+          "default": "com.apple.UserNotificationCenterAgent"
+        },
+        "XProtect_agent_scan": {
+          "type": "string",
+          "default": "com.apple.XProtect.agent.scan"
+        },
+        "AXVisualSupportAgent": {
+          "type": "string",
+          "default": "com.apple.accessibility.AXVisualSupportAgent"
+        },
+        "Console": {
+          "type": "string",
+          "default": "com.apple.Console"
+        },
+        "SoftwareUpdateNotificationManager": {
+          "type": "string",
+          "default": "com.apple.SoftwareUpdateNotificationManager"
+        },
+        "TextInputSwitcher": {
+          "type": "string",
+          "default": "com.apple.TextInputSwitcher"
+        },
+        "UIKitSystemApp": {
+          "type": "string",
+          "default": "com.apple.UIKitSystemApp"
+        },
+        "WindowManager": {
+          "type": "string",
+          "default": "com.apple.WindowManager"
+        },
+        "JamfAgent": {
+          "type": "string",
+          "default": "com.apple.JamfAgent"
+        },
+        "SystemUIServer": {
+          "type": "string",
+          "default": "com.apple.SystemUIServer"
+        },
+        "Jamf_management": {
+          "type": "string",
+          "default": "com.jamf.management.Jamf"
+        },
+        "jamf_management_daemon": {
+          "type": "string",
+          "default": "com.jamf.management.daemon"
+        },
+        "JamfProCommService": {
+          "type": "string",
+          "default": "com.jamf.management.JamfProCommService"
+        },
+        "JamfProtectAgent": {
+          "type": "string",
+          "default": "com.jamf.management.JamfProtectAgent"
+        },
+        "jamf_management_trust": {
+          "type": "string",
+          "default": "com.jamf.management.trust"
+        },
+        "jamf_management_connect": {
+          "type": "string",
+          "default": "com.jamf.management.connect"
+        },
+        "jamf_management_remoteassist": {
+          "type": "string",
+          "default": "com.jamf.management.remoteassist"
+        }
+      }
+    },
+    "appConfiguration": {
+      "title": "Application Configuration",
+      "description": "Liste des applications autorisées par groupe",
+      "type": "object",
+      "property_order": 10,
+      "additionalProperties": {
+        "type": "array",
+        "description": "Liste des applications autorisées pour ce groupe",
+        "items": {
+          "type": "string",
+          "description": "BundleID d'une application",
+          "pattern": "^[a-zA-Z0-9.]+$",
+          "title": "App"
+        }
+      },
+      "default": {
+        "Admin": [
+          "com.apple.Safari",
+          "com.google.Chrome",
+          "com.apple.Terminal",
+          "com.microsoft.CompanyPortalMac.ssoextension"
+        ],
+        "Default": [
+          "com.apple.Safari",
+          "com.google.Chrome",
+          "com.apple.Terminal",
+          "com.microsoft.CompanyPortalMac.ssoextension"
+        ]
       }
     }
   },
+  "required": ["jamfSettings", "generalSettings", "systemApps", "appConfiguration"],
   "additionalProperties": false
 }
