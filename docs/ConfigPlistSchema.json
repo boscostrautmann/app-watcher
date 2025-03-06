@@ -2,6 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "App-Watcher - Unified Configuration Schema",
   "description": "Schéma pour configurer les paramètres de App-Watcher et les applications autorisées",
+  "__preferencedomain": "com.topbosco.AppWatcher.plist",
   "type": "object",
   "properties": {
     "jamfSettings": {
@@ -50,6 +51,24 @@
           "minimum": 1,
           "default": 60
         },
+        "ScriptPath": {
+          "title": "Script Path",
+          "description": "Chemin du script",
+          "type": "string",
+          "default": "/usr/local/bin/app_watcher.sh"
+        },
+        "LaunchAgentLabel": {
+          "title": "Launch Agent Label",
+          "description": "Label pour le LaunchAgent",
+          "type": "string",
+          "default": "com.topbosco.appwatcher"
+        },
+        "LaunchAgentPath": {
+          "title": "LaunchAgent Path",
+          "description": "Chemin pour le LaunchAgent",
+          "type": "string",
+          "default": "/Library/LaunchAgents/com.topbosco.appwatcher.plist"
+        },
         "StandardOutPath": {
           "title": "Standard Output Path",
           "description": "Chemin pour les sorties standard",
@@ -61,21 +80,9 @@
           "description": "Chemin pour les erreurs",
           "type": "string",
           "default": "/var/log/app_watcher.log"
-        },
-        "company": {
-          "title": "Company Name",
-          "description": "Nom de l'entreprise pour personnalisation",
-          "type": "string",
-          "default": "example"
-        },
-        "appsPlistPath": {
-          "title": "Apps Plist Path",
-          "description": "Chemin du fichier apps.plist",
-          "type": "string",
-          "default": "/etc/apps.plist"
         }
       },
-      "required": ["debug", "StartInterval", "StandardOutPath", "StandardErrorPath", "company", "appsPlistPath"]
+      "required": ["debug", "StartInterval", "ScriptPath", "LaunchAgentLabel", "LaunchAgentPath", "StandardOutPath", "StandardErrorPath"]
     },
     "systemApps": {
       "title": "System Apps",
@@ -340,12 +347,6 @@
         }
       },
       "default": {
-        "Admin": [
-          "com.apple.Safari",
-          "com.google.Chrome",
-          "com.apple.Terminal",
-          "com.microsoft.CompanyPortalMac.ssoextension"
-        ],
         "Default": [
           "com.apple.Safari",
           "com.google.Chrome",
