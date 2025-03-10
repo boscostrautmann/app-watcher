@@ -2,88 +2,9 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "App-Watcher - Unified Configuration Schema",
   "description": "Schéma pour configurer les paramètres de App-Watcher et les applications autorisées",
-  "__preferencedomain": "com.topbosco.AppWatcher.plist",
+  "__preferencedomain": "com.$company.AppWatcher",
   "type": "object",
   "properties": {
-    "jamfSettings": {
-      "title": "JAMF Settings",
-      "description": "Paramètres de connexion à JAMF",
-      "type": "object",
-      "properties": {
-        "JAMF_URL": {
-          "title": "JAMF Server URL",
-          "description": "Adresse du serveur JAMF",
-          "type": "string",
-          "format": "uri",
-          "default": "https://votreinstance.jamfcloud.com"
-        },
-        "JAMF_CLIENT_ID": {
-          "title": "JAMF Client ID",
-          "description": "Identifiant client pour l'authentification OAuth",
-          "type": "string",
-          "default": "votre_client_id"
-        },
-        "JAMF_CLIENT_SECRET": {
-          "title": "JAMF Client Secret",
-          "description": "Secret client pour l'authentification OAuth",
-          "type": "string",
-          "default": "votre_client_secret"
-        }
-      },
-      "required": ["JAMF_URL", "JAMF_CLIENT_ID", "JAMF_CLIENT_SECRET"]
-    },
-    "generalSettings": {
-      "title": "General Settings",
-      "description": "Paramètres de configuration générale",
-      "type": "object",
-      "properties": {
-        "debug": {
-          "title": "Debug Mode",
-          "description": "Niveau de logs pour le mode débogage",
-          "type": "string",
-          "enum": ["FALSE", "INFO", "ERROR", "DEBUG"],
-          "default": "FALSE"
-        },
-        "StartInterval": {
-          "title": "Start Interval",
-          "description": "Intervalle en secondes pour l'exécution du script",
-          "type": "integer",
-          "minimum": 1,
-          "default": 60
-        },
-        "ScriptPath": {
-          "title": "Script Path",
-          "description": "Chemin du script",
-          "type": "string",
-          "default": "/usr/local/bin/app_watcher.sh"
-        },
-        "LaunchAgentLabel": {
-          "title": "Launch Agent Label",
-          "description": "Label pour le LaunchAgent",
-          "type": "string",
-          "default": "com.topbosco.appwatcher"
-        },
-        "LaunchAgentPath": {
-          "title": "LaunchAgent Path",
-          "description": "Chemin pour le LaunchAgent",
-          "type": "string",
-          "default": "/Library/LaunchAgents/com.topbosco.appwatcher.plist"
-        },
-        "StandardOutPath": {
-          "title": "Standard Output Path",
-          "description": "Chemin pour les sorties standard",
-          "type": "string",
-          "default": "/var/log/app_watcher.log"
-        },
-        "StandardErrorPath": {
-          "title": "Standard Error Path",
-          "description": "Chemin pour les erreurs",
-          "type": "string",
-          "default": "/var/log/app_watcher.log"
-        }
-      },
-      "required": ["debug", "StartInterval", "ScriptPath", "LaunchAgentLabel", "LaunchAgentPath", "StandardOutPath", "StandardErrorPath"]
-    },
     "systemApps": {
       "title": "System Apps",
       "description": "Liste des applications toujours autorisées (système ou Jamf)",
@@ -217,6 +138,10 @@
           "type": "string",
           "default": "com.apple.uikitsystem"
         },
+        "ThemeWidgetControlViewService": {
+          "type": "string",
+          "default": "com.apple.appkit.xpc.ThemeWidgetControlViewService"
+        },
         "Terminal": {
           "type": "string",
           "default": "com.apple.Terminal"
@@ -293,6 +218,14 @@
           "type": "string",
           "default": "com.apple.WindowManager"
         },
+        "share AirDrop send": {
+          "type": "string",
+          "default": "com.apple.share.AirDrop.send"
+        },
+        "sharing ShareSheetUI": {
+          "type": "string",
+          "default": "com.apple.sharing.ShareSheetUI"
+        },
         "JamfAgent": {
           "type": "string",
           "default": "com.apple.JamfAgent"
@@ -300,6 +233,22 @@
         "SystemUIServer": {
           "type": "string",
           "default": "com.apple.SystemUIServer"
+        },
+        "controlstrip": {
+          "type": "string",
+          "default": "com.apple.controlstrip"
+        },
+        "Safari SandboxBroker": {
+          "type": "string",
+          "default": "com.apple.Safari.SandboxBroker"
+        },
+        "storeuid": {
+          "type": "string",
+          "default": "com.apple.storeuid"
+        },
+        "EmojiFunctionRowItem": {
+          "type": "string",
+          "default": "com.apple.inputmethod.EmojiFunctionRowItem"
         },
         "Jamf_management": {
           "type": "string",
@@ -328,6 +277,94 @@
         "jamf_management_remoteassist": {
           "type": "string",
           "default": "com.jamf.management.remoteassist"
+        },
+        "QuickLookUIFramework_QLPreviewGenerationExtension": {
+          "type": "string",
+          "default": "com.apple.QuickLookUIFramework.QLPreviewGenerationExtension"
+        },
+        "TextInputUI_CursorUIViewService": {
+          "type": "string",
+          "default": "com.apple.TextInputUI.xpc.CursorUIViewService"
+        },
+        "chronod": {
+          "type": "string",
+          "default": "com.apple.chronod"
+        },
+        "coreservices_uiagent": {
+          "type": "string",
+          "default": "com.apple.coreservices.uiagent"
+        },
+        "notificationcenterui": {
+          "type": "string",
+          "default": "com.apple.notificationcenterui"
+        },
+        "print_daemon_printtool": {
+          "type": "string",
+          "default": "com.apple.print.daemon.printtool"
+        },
+        "quicklook_QuickLookUIService": {
+          "type": "string",
+          "default": "com.apple.quicklook.QuickLookUIService"
+        },
+        "security_Keychain_Circle_Notification": {
+          "type": "string",
+          "default": "com.apple.security.Keychain-Circle-Notification"
+        },
+        "speech_SpeechSynthesisServerXPC": {
+          "type": "string",
+          "default": "com.apple.speech.SpeechSynthesisServerXPC"
+        },
+        "universalcontrol": {
+          "type": "string",
+          "default": "com.apple.universalcontrol"
+        },
+        "logi_cp_dev_mgr": {
+          "type": "string",
+          "default": "com.logi.cp-dev-mgr"
+        },
+        "microsoft_Outlook_CalendarWidget": {
+          "type": "string",
+          "default": "com.microsoft.Outlook.CalendarWidget"
+        },
+        "1password_browser_helper": {
+          "type": "string",
+          "default": "2BUA8C4S2C.com.1password.browser-helper"
+        },
+        "AuthenticationServicesCore_AuthenticationServicesAgent": {
+          "type": "string",
+          "default": "com.apple.AuthenticationServicesCore.AuthenticationServicesAgent"
+        },
+        "IOUIAgent": {
+          "type": "string",
+          "default": "com.apple.IOUIAgent"
+        },
+        "LocalAuthentication_UIAgent": {
+          "type": "string",
+          "default": "com.apple.LocalAuthentication.UIAgent"
+        },
+        "MobileDeviceUpdater": {
+          "type": "string",
+          "default": "com.apple.MobileDeviceUpdater"
+        },
+        "PressAndHold": {
+          "type": "string",
+          "default": "com.apple.PressAndHold"
+        },
+        "iCal_CalendarWidgetExtension": {
+          "type": "string",
+          "default": "com.apple.iCal.CalendarWidgetExtension"
+        },
+        "reminders_macOSIntentsExtension": {
+          "type": "string",
+          "default": "com.apple.reminders.macOSIntentsExtension"
+        },
+        "ViewBridgeAuxiliary": {
+          "type": "string",
+          "default": "com.apple.ViewBridgeAuxiliary"
+        },
+        "shortcuts_ShortcutsWidget": {
+          "type": "string",
+          "default": "com.apple.shortcuts.ShortcutsWidget"
         }
       }
     },
@@ -347,7 +384,7 @@
         }
       },
       "default": {
-        "Default": [
+        "default": [
           "com.apple.Safari",
           "com.google.Chrome",
           "com.apple.Terminal",
@@ -356,6 +393,6 @@
       }
     }
   },
-  "required": ["jamfSettings", "generalSettings", "systemApps", "appConfiguration"],
+  "required": ["systemApps", "appConfiguration"],
   "additionalProperties": false
 }
